@@ -3,6 +3,8 @@ package com.example.guest.weatherapitake2;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -20,7 +22,9 @@ import okhttp3.Response;
 public class ResultsActivity extends AppCompatActivity {
     public ArrayList<Forecast> mForecasts = new ArrayList<>();
     @Bind(R.id.zipCode) TextView mZip;
-    @Bind(R.id.listView) ListView mListView;
+    @Bind(R.id.recyclerView)
+    RecyclerView mRecyclerView;
+    private ForecastListAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,13 +54,11 @@ public class ResultsActivity extends AppCompatActivity {
                 ResultsActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run(){
-                        String[] forecastTemps = new String[mForecasts.size()];
-                        for (int i = 0; i < forecastTemps.length; i ++ ){
-                            forecastTemps[i] = mForecasts.get(i).getTemp();
-                        }
-                        ArrayAdapter adapter = new ArrayAdapter<>(ResultsActivity.this, android.R.layout.simple_list_item_1, forecastTemps);
-                        mListView.setAdapter(adapter);
-
+                        mAdapter = new ForecastListAdapter(getApplicationContext(), mForecasts);
+                        mRecyclerView.setAdapter(mAdapter);
+                        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(ResultsActivity.this);
+                        mRecyclerView.setLayoutManager(layoutManager);
+                        mRecyclerView.setHasFixedSize(true);
                     }
                 });
             }
