@@ -56,9 +56,11 @@ public class OpenWeatherService {
                     String country = openWeatherJSON.getJSONObject("city").getString("country");
                     String day = days[i];
                     String temp = infoJSON.getJSONObject("temp").getString("day");
+                    String hi = infoJSON.getJSONObject("temp").getString("max");
+                    String lo = infoJSON.getJSONObject("temp").getString("min");
                     String main = infoJSON.getJSONArray("weather").getJSONObject(0).getString("main");
                     String description = infoJSON.getJSONArray("weather").getJSONObject(0).getString("description");
-                    Forecast forecast = new Forecast(city, country, day, temp, main, description);
+                    Forecast forecast = new Forecast(city, country, day, temp, main, description, hi, lo);
                     forecasts.add(forecast);
                 }
             }

@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v){
         if(v.getId() == R.id.searchButton){
             String location = mZipSearch.getText().toString();
-            Intent i = new Intent(MainActivity.this, ResultsActivity.class);
+            Intent i = new Intent(MainActivity.this, ResultListActivity.class);
             i.putExtra("location", location);
             startActivity(i);
         }

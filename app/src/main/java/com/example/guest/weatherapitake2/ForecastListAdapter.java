@@ -1,12 +1,15 @@
 package com.example.guest.weatherapitake2;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 
@@ -45,8 +48,7 @@ public class ForecastListAdapter extends RecyclerView.Adapter<ForecastListAdapte
     public class ForecastViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.dayTextView) TextView mDayTextView;
         @Bind(R.id.tempTextView) TextView mTempTextView;
-        @Bind(R.id.mainTextView)
-        TextView mMainTextView;
+        @Bind(R.id.mainTextView) TextView mMainTextView;
         @Bind(R.id.descriptionTextView) TextView mDescriptionTextView;
         private Context mContext;
 
@@ -55,6 +57,18 @@ public class ForecastListAdapter extends RecyclerView.Adapter<ForecastListAdapte
             super(itemView);
             ButterKnife.bind(this, itemView);
             mContext = itemView.getContext();
+            itemView.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v){
+                    int itemPosition = getLayoutPosition();
+                    Intent i = new Intent(mContext, ForecastDetailActivity.class);
+                    i.putExtra("position", itemPosition+"");
+                    i.putExtra("restaurants", Parcels.wrap(mForecasts));
+                    mContext.startActivity(i);
+                }
+            });
+
+
         }
 
         public void bindForecast(Forecast forecast) {
